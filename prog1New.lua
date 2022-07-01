@@ -4,13 +4,7 @@ os.loadAPI("test/mobApi")
 local drawerController = peripheral.wrap("functionalstorage:storage_controller_0")
 local mobs = {}
 
-function genFunction(redstoneIntegrator, face)
-    func = function(redstoneIntegrator, face)
-        peripheral.call(redstoneIntegrator, "setOutput", face, not peripherial.call(redstoneIntegrator, "getOutput", face))
-    end
-
-    return func
-end
+handleIntegrator()
 
 function checkItemLevels(storageController, mobs, t)
 	for _, mob in ipairs(mobs) do
@@ -51,10 +45,10 @@ end
 
 local t = buttonApi.new("top")
 
---t:add(mobs[1].buttonName, peripheral.call(redstoneIntegrator, "setOutput", face, not peripheral.call(redstoneIntegrator, "getOutput", face)), "front"), 2, 2, 10, 4)
---t:add(mobs[2].buttonName, genFunction(mobs[2].redstoneIntegrator, "front"), 2, 6, 10, 8)
---t:add(mobs[3].buttonName, genFunction(mobs[3].redstoneIntegrator, "front"), 2, 10, 10, 12)
---t:add(mobs[4].buttonName, genFunction(mobs[4].redstoneIntegrator, "front"), 2, 14, 10, 16)
+t:add(mobs[1].buttonName, genFunction(mobs[1].redstoneIntegrator, "front"), 2, 2, 10, 4)
+t:add(mobs[2].buttonName, genFunction(mobs[2].redstoneIntegrator, "front"), 2, 6, 10, 8)
+t:add(mobs[3].buttonName, genFunction(mobs[3].redstoneIntegrator, "front"), 2, 10, 10, 12)
+t:add(mobs[4].buttonName, genFunction(mobs[4].redstoneIntegrator, "front"), 2, 14, 10, 16)
 t:add("MSF", genFunction("redstoneIntegrator_14", "bottom"), 32, 6, 38, 8)
 t:add("Mash", genFunction("redstoneIntegrator_14", "top"), 24, 2, 30, 4)
 t:add("Fans", genFunction("redstoneIntegrator_14", "left"), 32, 2, 38, 4)
@@ -71,12 +65,33 @@ end
 
 t:draw()
 
-local timerID = os.startTimer(30)
+--local timerID = os.startTimer(30)
 
 while true do
 	local event, p1 = t:handleEvents(os.pullEvent())
 	if event == "button_click" then
-        t:onClick(p1)
+        local found = false
+
+        for _, mob in ipairs(mobs) do
+            if mob.buttonName == p1 then
+                found = true
+                t:onClick(mob.buttonName, mob.redstoneIntegrator, "front")
+                break
+            end
+        end
+        if not found then
+            if p1 == "MSF" then
+                t:onClick(p1, "redstoneIntegrator_14", "bottom")
+            elseif p1 == "Mash" then
+                t:onClick(p1, "redstoneIntegrator_14", "top")
+            elseif p1 == "Fans" then
+                t:onClick(p1, "redstoneIntegrator_14", "left")
+            elseif p1 == "Espwn" then
+                t:onClick(p1, "redstoneIntegrator_14", "right")
+            else if p1 == "Light" then
+                t:onClick(p1, "redstoneIntegrator_14", "front")
+            end
+        end
 	end
 
 	if event == "timer" then
