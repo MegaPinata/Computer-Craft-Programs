@@ -103,3 +103,4 @@ while true do
 		checkItemLevels(drawerController, itemsWanted, buttonTable, t)
     end
 end
+	end
