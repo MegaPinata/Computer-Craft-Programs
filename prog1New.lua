@@ -29,32 +29,10 @@ function checkItemLevels(storageController, mobs, t)
 	end
 end
 
-table.insert(
-	mobs,
-	mobApi.Mob:new("Blaze", "Blaze", "redstoneIntegrator_6", { mobApi.Drop:new("minecraft:blaze_rod", 0, 3000) })
-)
-table.insert(
-	mobs,
-	mobApi.Mob:new(
-		"Wither Skeleton",
-		"W Skel",
-		"redstoneIntegrator_7",
-		{ mobApi.Drop:new("minecraft:wither_skeleton_skull", 0, 100) }
-	)
-)
-table.insert(
-	mobs,
-	mobApi.Mob:new("Enderman", "Ender", "redstoneIntegrator_8", { mobApi.Drop:new("minecraft:ender_pearl", 0, 5000) })
-)
-table.insert(
-	mobs,
-	mobApi.Mob:new(
-		"Phantom",
-		"Phantom",
-		"redstoneIntegrator_9",
-		{ mobApi.Drop:new("minecraft:phantom_membrane", 0, 3000) }
-	)
-)
+table.insert(mobs,mobApi.Mob:new("Blaze", "Blaze", "redstoneIntegrator_6", { mobApi.Drop:new("minecraft:blaze_rod", 0, 3000) }))
+table.insert(mobs,mobApi.Mob:new("Wither Skeleton",	"W Skel","redstoneIntegrator_7",{ mobApi.Drop:new("minecraft:wither_skeleton_skull", 0, 100) }))
+table.insert(mobs, mobApi.Mob:new("Enderman", "Ender", "redstoneIntegrator_8", { mobApi.Drop:new("minecraft:ender_pearl", 0, 5000) }))
+table.insert(mobs, mobApi.Mob:new("Phantom", "Phantom", "redstoneIntegrator_9",{ mobApi.Drop:new("minecraft:phantom_membrane", 0, 3000) }))
 
 -- Find the slot the wanted items are in and store it
 for slot, item in pairs(drawerController.list()) do
