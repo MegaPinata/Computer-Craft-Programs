@@ -4,7 +4,12 @@ os.loadAPI("test/mobApi")
 local drawerController = peripheral.wrap("functionalstorage:storage_controller_0")
 local mobs = {}
 
-handleIntegrator()
+function genFunction()
+    local func = function(redstoneIntegrator, face)
+        peripheral.call(redstoneIntegrator, "setOutput", face, not peripheral.call(redstoneIntegrator, "getOutput", face))
+    end
+    return func
+end
 
 function checkItemLevels(storageController, mobs, t)
 	for _, mob in ipairs(mobs) do
@@ -45,15 +50,15 @@ end
 
 local t = buttonApi.new("top")
 
-t:add(mobs[1].buttonName, genFunction(mobs[1].redstoneIntegrator, "front"), 2, 2, 10, 4)
-t:add(mobs[2].buttonName, genFunction(mobs[2].redstoneIntegrator, "front"), 2, 6, 10, 8)
-t:add(mobs[3].buttonName, genFunction(mobs[3].redstoneIntegrator, "front"), 2, 10, 10, 12)
-t:add(mobs[4].buttonName, genFunction(mobs[4].redstoneIntegrator, "front"), 2, 14, 10, 16)
-t:add("MSF", genFunction("redstoneIntegrator_14", "bottom"), 32, 6, 38, 8)
-t:add("Mash", genFunction("redstoneIntegrator_14", "top"), 24, 2, 30, 4)
-t:add("Fans", genFunction("redstoneIntegrator_14", "left"), 32, 2, 38, 4)
-t:add("ESpwn", genFunction("redstoneIntegrator_14", "right"), 24, 14, 30, 16)
-t:add("Light", genFunction("redstoneIntegrator_14", "front"), 32, 14, 38, 16)
+t:add(mobs[1].buttonName, genFunction(), 2, 2, 10, 4)
+t:add(mobs[2].buttonName, genFunction(), 2, 6, 10, 8)
+t:add(mobs[3].buttonName, genFunction(), 2, 10, 10, 12)
+t:add(mobs[4].buttonName, genFunction(), 2, 14, 10, 16)
+t:add("MSF", genFunction(), 32, 6, 38, 8)
+t:add("Mash", genFunction(), 24, 2, 30, 4)
+t:add("Fans", genFunction(), 32, 2, 38, 4)
+t:add("ESpwn", genFunction(), 24, 14, 30, 16)
+t:add("Light", genFunction(), 32, 14, 38, 16)
 
 for _, button in ipairs(t) do
     local state = false
