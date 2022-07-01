@@ -51,10 +51,10 @@ end
 
 local t = buttonApi.new("top")
 
-t:add(mobs[1].buttonName, peripheral.call(redstoneIntegrator, "setOutput", face, not peripheral.call(redstoneIntegrator, "getOutput", face)), "front"), 2, 2, 10, 4)
-t:add(mobs[2].buttonName, genFunction(mobs[2].redstoneIntegrator, "front"), 2, 6, 10, 8)
-t:add(mobs[3].buttonName, genFunction(mobs[3].redstoneIntegrator, "front"), 2, 10, 10, 12)
-t:add(mobs[4].buttonName, genFunction(mobs[4].redstoneIntegrator, "front"), 2, 14, 10, 16)
+--t:add(mobs[1].buttonName, peripheral.call(redstoneIntegrator, "setOutput", face, not peripheral.call(redstoneIntegrator, "getOutput", face)), "front"), 2, 2, 10, 4)
+--t:add(mobs[2].buttonName, genFunction(mobs[2].redstoneIntegrator, "front"), 2, 6, 10, 8)
+--t:add(mobs[3].buttonName, genFunction(mobs[3].redstoneIntegrator, "front"), 2, 10, 10, 12)
+--t:add(mobs[4].buttonName, genFunction(mobs[4].redstoneIntegrator, "front"), 2, 14, 10, 16)
 t:add("MSF", genFunction("redstoneIntegrator_14", "bottom"), 32, 6, 38, 8)
 t:add("Mash", genFunction("redstoneIntegrator_14", "top"), 24, 2, 30, 4)
 t:add("Fans", genFunction("redstoneIntegrator_14", "left"), 32, 2, 38, 4)
