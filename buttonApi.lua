@@ -146,9 +146,9 @@ local Button = {
 		self.buttonList[name].active = state
 		if not noDraw then self:draw() end
 	end,
-	onClick = function(self, name)
+	onClick = function(self, name, redstoneIntegrator, face)
 		self:toggleButton(name)
-		self.buttonList[name].func()
+		self.buttonList[name].func(redstoneIntegrator, face)
 	end
 }
 
