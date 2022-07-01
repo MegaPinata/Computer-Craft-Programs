@@ -9,13 +9,14 @@ function genFunction(redstoneIntegrator, face)
 end
 
 function checkItemLevels(storageController, mobs, t)
-	for _, mob in ipairs(mobs) do
+    for _, mob in ipairs(mobs) do
         for _, drop in ipairs(mob.dropsWanted) do
             local item = drawerController.getItemDetail(item.inventorySlot)
             if item.count <= drop.quantity and not t:getActive(mob.buttonName) then
                 t:onClick(mob.buttonName)
             elseif item.count > drop.quantity and t:getActive(mob.buttonName) then
                 t:onClick(mob.buttonName)
+            end
         end
     end
 end
@@ -41,15 +42,7 @@ for _, mob in ipairs(mobs) do
 end
 
 for _, face in ipairs({"bottom","top","left","right","front"}) do
-    peripheral.call("redstoneIntegrator_14", "setOutput", false)
-end
-
-for _, button in ipairs(buttonTable) do
-    local state = false
-	if value[3] == "front" then
-        state = true
-	end
-    peripheral.call(button[2], "setOutput", button[3], state)
+    peripheral.call("redstoneIntegrator_14", "setOutput", face, false)
 end
 
 local t = buttonApi.new("top")
@@ -63,6 +56,15 @@ t:add("Mash", genFunction("redstoneIntegrator_14", "top"), 24, 2, 30, 4)
 t:add("Fans", genFunction("redstoneIntegrator_14", "left"), 32, 2, 38, 4)
 t:add("ESpwn", genFunction("redstoneIntegrator_14", "right"), 24, 14, 30, 16)
 t:add("Light", genFunction("redstoneIntegrator_14", "front"), 32, 14, 38, 16)
+
+for _, button in ipairs(t) do
+    local state = false
+	if value[3] == "front" then
+        state = true
+	end
+    peripheral.call(button[2], "setOutput", button[3], state)
+end
+
 t:draw()
 
 local timerID = os.startTimer(30)
