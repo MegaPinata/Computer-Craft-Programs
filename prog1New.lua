@@ -68,7 +68,7 @@ for slot, item in pairs(drawerController.list()) do
 end
 
 for _, mob in ipairs(mobs) do
-	peripheral.call(mob.redstoneIntegrator, "setOutput", "front", false)
+	peripheral.call(mob.redstoneIntegrator, "setOutput", "front", true)
 end
 
 for _, face in ipairs({ "bottom", "top", "left", "right", "front" }) do
@@ -77,10 +77,10 @@ end
 
 local t = buttonApi.new("top")
 
-t:add(mobs[1].buttonName, genFunction(), 2, 2, 10, 4, true)
-t:add(mobs[2].buttonName, genFunction(), 2, 6, 10, 8, true)
-t:add(mobs[3].buttonName, genFunction(), 2, 10, 10, 12, true)
-t:add(mobs[4].buttonName, genFunction(), 2, 14, 10, 16, true)
+t:add(mobs[1].buttonName, genFunction(), 2, 2, 10, 4)
+t:add(mobs[2].buttonName, genFunction(), 2, 6, 10, 8)
+t:add(mobs[3].buttonName, genFunction(), 2, 10, 10, 12)
+t:add(mobs[4].buttonName, genFunction(), 2, 14, 10, 16)
 t:add("MSF", genFunction(), 32, 6, 38, 8)
 t:add("Mash", genFunction(), 24, 2, 30, 4)
 t:add("Fans", genFunction(), 32, 2, 38, 4)
@@ -119,7 +119,7 @@ while true do
 				t:onClick(p1, "redstoneIntegrator_14", "top")
 			elseif p1 == "Fans" then
 				t:onClick(p1, "redstoneIntegrator_14", "left")
-			elseif p1 == "Espwn" then
+			elseif p1 == "ESpwn" then
 				t:onClick(p1, "redstoneIntegrator_14", "right")
 			else
 				if p1 == "Light" then
