@@ -14,7 +14,7 @@ function checkItemLevels(storageController, mobs, t)
 		local states = {}
 		local temp
 		for _, drop in ipairs(mob.dropsWanted) do
-			local item = storageController.getItemDetail(item.inventorySlot)
+			local item = storageController.getItemDetail(drop.inventorySlot)
 			if item.count <= drop.quantity and not t:getActive(mob.buttonName) then
 				table.insert(states, true)
 			elseif item.count > drop.quantity and t:getActive(mob.buttonName) then
@@ -31,6 +31,7 @@ function checkItemLevels(storageController, mobs, t)
 			if not temp then t:onClick(mob.button, mob.redstoneIntegrator, "front") end
 		end
 	end
+	os.startTimer(30)
 end
 
 table.insert(mobs,mobApi.Mob:new("Blaze", "Blaze", "redstoneIntegrator_6", { mobApi.Drop:new("minecraft:blaze_rod", 0, 3000) }))
@@ -42,7 +43,7 @@ table.insert(mobs, mobApi.Mob:new("Phantom", "Phantom", "redstoneIntegrator_9",{
 for slot, item in pairs(drawerController.list()) do
 	for _, mob in ipairs(mobs) do
 		for _, drop in ipairs(mob.dropsWanted) do
-			if item.name == drop.name then
+			if item.name == drop.idName then
 				drop.inventorySlot = slot
 			end
 		end
@@ -78,7 +79,7 @@ end
 
 t:draw()
 
---local timerID = os.startTimer(30)
+checkItemLevels(drawerController, mobs, t)
 
 while true do
 	local event, p1 = t:handleEvents(os.pullEvent())
@@ -108,7 +109,7 @@ while true do
 		end
 
 		if event == "timer" then
-			checkItemLevels(drawerController, itemsWanted, buttonTable, t)
+			checkItemLevels(drawerController, mobs, t)
 		end
 	end
 end
