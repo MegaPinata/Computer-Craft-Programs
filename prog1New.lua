@@ -5,26 +5,30 @@ local drawerController = peripheral.wrap("functionalstorage:storage_controller_0
 local mobs = {}
 
 function genFunction()
-	local func = function(redstoneIntegrator, face)
-		peripheral.call(
-			redstoneIntegrator,
-			"setOutput",
-			face,
-			not peripheral.call(redstoneIntegrator, "getOutput", face)
-		)
-	end
+	local func = function(redstoneIntegrator, face) peripheral.call(redstoneIntegrator, "setOutput", face, not peripheral.call(redstoneIntegrator, "getOutput", face)) end
 	return func
 end
 
 function checkItemLevels(storageController, mobs, t)
 	for _, mob in ipairs(mobs) do
+		local states = {}
+		local temp
 		for _, drop in ipairs(mob.dropsWanted) do
-			local item = drawerController.getItemDetail(item.inventorySlot)
+			local item = storageController.getItemDetail(item.inventorySlot)
 			if item.count <= drop.quantity and not t:getActive(mob.buttonName) then
-				t:onClick(mob.buttonName)
+				table.insert(states, true)
 			elseif item.count > drop.quantity and t:getActive(mob.buttonName) then
-				t:onClick(mob.buttonName)
+				table.insert(state, false)
 			end
+		end
+		if not t:getActive(mob.buttonName) then
+			temp = false
+			for _, state in ipairs(states) do temp = temp or state end
+			if temp then t:onClick(mob.buttonName, mob.redstoneIntegrator, "front") end
+		else
+			temp = true
+			for _, state in ipairs(states) do temp = temp and state end
+			if not temp then t:onClick(mob.button, mob.redstoneIntegrator, "front") end
 		end
 	end
 end
@@ -48,7 +52,6 @@ end
 for _, mob in ipairs(mobs) do
 	peripheral.call(mob.redstoneIntegrator, "setOutput", "front", true)
 end
-
 for _, face in ipairs({ "bottom", "top", "left", "right", "front" }) do
 	peripheral.call("redstoneIntegrator_14", "setOutput", face, false)
 end
@@ -99,10 +102,8 @@ while true do
 				t:onClick(p1, "redstoneIntegrator_14", "left")
 			elseif p1 == "ESpwn" then
 				t:onClick(p1, "redstoneIntegrator_14", "right")
-			else
-				if p1 == "Light" then
+			elseif p1 == "Light" then
 					t:onClick(p1, "redstoneIntegrator_14", "front")
-				end
 			end
 		end
 
