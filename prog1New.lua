@@ -32,7 +32,6 @@ function checkItemLevels(storageController, mobs, t)
 			if not temp then t:onClick(mob.button, mob.redstoneIntegrator, "front") end
 		end
 	end
-	os.startTimer(30)
 end
 
 table.insert(mobs,mobApi.Mob:new("Blaze", "Blaze", "redstoneIntegrator_6", { mobApi.Drop:new("minecraft:blaze_rod", 0, 3000) }))
@@ -109,10 +108,10 @@ while true do
 					t:onClick(p1, "redstoneIntegrator_14", "front")
 			end
 		end
-
-		if event == "timer" then
-			checkItemLevels(drawerController, mobs, t)
-			os.startTimer(5)
-		end
+	end
+	
+	if event == "timer" then
+		checkItemLevels(drawerController, mobs, t)
+		os.startTimer(5)
 	end
 end
