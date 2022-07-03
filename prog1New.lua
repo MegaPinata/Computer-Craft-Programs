@@ -15,6 +15,7 @@ function checkItemLevels(storageController, mobs, t)
 		local temp
 		for _, drop in ipairs(mob.dropsWanted) do
 			local item = storageController.getItemDetail(drop.inventorySlot)
+			print(item.name..': '..item.count)
 			if item.count <= drop.quantity and not t:getActive(mob.buttonName) then
 				table.insert(states, true)
 			elseif item.count > drop.quantity and t:getActive(mob.buttonName) then
@@ -80,6 +81,7 @@ end
 t:draw()
 
 checkItemLevels(drawerController, mobs, t)
+os.startTimer(5)
 
 while true do
 	local event, p1 = t:handleEvents(os.pullEvent())
@@ -110,6 +112,7 @@ while true do
 
 		if event == "timer" then
 			checkItemLevels(drawerController, mobs, t)
+			os.startTimer(5)
 		end
 	end
 end
