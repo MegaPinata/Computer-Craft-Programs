@@ -3,11 +3,9 @@ os.loadAPI("test/mobApi")
 
 local drawerController = peripheral.wrap("functionalstorage:storage_controller_0")
 local mobs = {}
+local fanTimer
 
-function genFunction()
-	local func = function(redstoneIntegrator, face) peripheral.call(redstoneIntegrator, "setOutput", face, not peripheral.call(redstoneIntegrator, "getOutput", face)) end
-	return func
-end
+local func = function(redstoneIntegrator, face) peripheral.call(redstoneIntegrator, "setOutput", face, not peripheral.call(redstoneIntegrator, "getOutput", face)) end
 
 function checkItemLevels(storageController, mobs, t)
 	for _, mob in ipairs(mobs) do
@@ -42,8 +40,7 @@ function checkItemLevels(storageController, mobs, t)
 		t:onClick("Mash", "redstoneIntegrator_14", "top")
 		t:onClick("Fans","redstoneIntegrator_14", "left")
 	elseif not temp and t:getActive("Mash") and t:getActive("Fans") then
-		t:onClick("Mash", "redstoneIntegrator_14", "top")
-		t:onClick("Fans", "redstoneIntegrator_14", "left")
+		return os.startTimer(30)
 	end
 end
 
@@ -72,15 +69,15 @@ end
 
 local t = buttonApi.new("top")
 
-t:add(mobs[1].buttonName, genFunction(), 2, 2, 10, 4)
-t:add(mobs[2].buttonName, genFunction(), 2, 6, 10, 8)
-t:add(mobs[3].buttonName, genFunction(), 2, 10, 10, 12)
-t:add(mobs[4].buttonName, genFunction(), 2, 14, 10, 16)
-t:add("MSF", genFunction(), 32, 6, 38, 8)
-t:add("Mash", genFunction(), 24, 2, 30, 4)
-t:add("Fans", genFunction(), 32, 2, 38, 4)
-t:add("ESpwn", genFunction(), 24, 14, 30, 16)
-t:add("Light", genFunction(), 32, 14, 38, 16, true)
+t:add(mobs[1].buttonName, func, 2, 2, 10, 4)
+t:add(mobs[2].buttonName, func, 2, 6, 10, 8)
+t:add(mobs[3].buttonName, func, 2, 10, 10, 12)
+t:add(mobs[4].buttonName, func, 2, 14, 10, 16)
+t:add("MSF", func, 32, 6, 38, 8)
+t:add("Mash", func, 24, 2, 30, 4)
+t:add("Fans", func, 32, 2, 38, 4)
+t:add("ESpwn", func, 24, 14, 30, 16)
+t:add("Light", func, 32, 14, 38, 16, true)
 
 for _, button in ipairs(t) do
 	local state = false
@@ -118,13 +115,18 @@ while true do
 			elseif p1 == "ESpwn" then
 				t:onClick(p1, "redstoneIntegrator_14", "right")
 			elseif p1 == "Light" then
-					t:onClick(p1, "redstoneIntegrator_14", "front")
+				t:onClick(p1, "redstoneIntegrator_14", "front")
 			end
 		end
 	end
 
 	if event == "timer" then
-		checkItemLevels(drawerController, mobs, t)
-		os.startTimer(5)
+		if p1 == mashFanTimer then
+			t:onClick("Mash", "redstoneIntegrator_14", "top")
+			t:onClick("Fans", "redstoneIntegrator_14", "left")
+		else
+			mashFanTimer = checkItemLevels(drawerController, mobs, t)
+			os.startTimer(5)
+		end
 	end
 end
