@@ -19,7 +19,7 @@ function checkItemLevels(storageController, mobs, t)
 			if item.count <= drop.quantity and not t:getActive(mob.buttonName) then
 				table.insert(states, true)
 			elseif item.count > drop.quantity and t:getActive(mob.buttonName) then
-				table.insert(state, false)
+				table.insert(states, false)
 			end
 		end
 		if not t:getActive(mob.buttonName) then
@@ -29,8 +29,21 @@ function checkItemLevels(storageController, mobs, t)
 		else
 			temp = true
 			for _, state in ipairs(states) do temp = temp and state end
-			if not temp then t:onClick(mob.button, mob.redstoneIntegrator, "front") end
+			if not temp then t:onClick(mob.buttonName, mob.redstoneIntegrator, "front") end
 		end
+	end
+
+	local temp = false
+	for _, mob in ipairs(mobs) do
+		if t:getActive(mob.buttonName)
+		temp = true
+	end
+	if temp and not t:getActive("Mash") and not t:getActive("Fans") then
+		t:onClick("Mash", "redstoneIntegrator_14", "top")
+		t:onClick("Fans","redstoneIntegrator_14", "left")
+	elseif not temp and t:getActive("Mash") and t:getActive("Fans") then
+		t:onClick("Mash", "redstoneIntegrator_14", "top")
+		t:onClick("Fans", "redstoneIntegrator_14", "left")
 	end
 end
 
@@ -109,7 +122,7 @@ while true do
 			end
 		end
 	end
-	
+
 	if event == "timer" then
 		checkItemLevels(drawerController, mobs, t)
 		os.startTimer(5)
